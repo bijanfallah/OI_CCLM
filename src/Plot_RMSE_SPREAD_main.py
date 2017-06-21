@@ -132,7 +132,7 @@ for kk in range(1,6):
             lons_f1=lon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
             #rlats_f1 = rlat_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
 			#rlons_f1 = rlon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
-	    rlats_f1 = rlat_f[start_lat:start_lat + dext_lat]
+	        rlats_f1 = rlat_f[start_lat:start_lat + dext_lat]
             rlons_f1 = rlon_f[start_lon:start_lon + dext_lon]
 	    for ii in range(0,forecast.shape[1]):
 	        for jj in range(0,forecast.shape[2]):
