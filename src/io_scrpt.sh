@@ -37,7 +37,7 @@ buffer=20
 inflation=1.0
 # path to the work directory:
 DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src/test/'
-std_err=0.2 # Standard deviation of the observation error (white noise)
+std_err=0.15 # Standard deviation of the observation error (white noise)
 first_name='test01_'${std_err}
 
 # ================================================================================================
