@@ -22,22 +22,22 @@
 set -ex
 # ====================================== NAMELIST ======================================================================
 month_length=10
-SEAS="DJF"
+SEAS="JJA"
 NN=500
 Var='T_2M'
 #Var='TOT_PREC'
 #COR_LEN=1
 M=50 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src'
+DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/src'
 # path to the codes:
-DIR_OI='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/inst/'
+DIR_OI='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/inst/'
 no_members=20 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src/test/'
-std_err=0.15 # Standard deviation of the observation error (white noise)
+DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/src/test/'
+std_err=666 # Standard deviation of the observation error (white noise)
 first_name='test01_'${std_err}
 
 # ================================================================================================
