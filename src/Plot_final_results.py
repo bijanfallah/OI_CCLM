@@ -100,7 +100,7 @@ else:
 
 # Write the RMSE mean of the member in a file
 
-names=DIR_exp+'/final_plot/'+'RMSE_'+pdf_name+'.csv'
+names=DIR_exp+'NAMES'+'/RMSE_'+pdf_name+'.csv'
 with open(names, 'wb') as f:
      writer = csv.writer(f)
      writer.writerow([NN,np.mean(RMSE)])
@@ -139,7 +139,7 @@ xs, ys, zs = rp.transform_points(pc,
                                  np.array([3, 60])).T   # Adjust for other domains!
 ax.set_xlim(xs)
 ax.set_ylim(ys)
-plt.savefig(DIR_exp+'/final_plot/'+pdf_name)
+plt.savefig(DIR_exp+'NAMES'+"/"+pdf_name)
 plt.close()
 
 # RMSE time-series
@@ -150,14 +150,14 @@ plt.ylabel('$RMSE$', size=35)
 plt.title('Boxplot of seasonal RMSEs averaged over the domain', size=30 , y=1.02)
 #plt.ylim([0,.45])
 
-names=DIR_exp+'/final_plot/'+pdf_name+'_Analysis.csv'
+names=DIR_exp+'NAMES'+"/"+pdf_name+'_Analysis.csv'
 with open(names, 'wb') as f:
      writer = csv.writer(f)
      writer.writerow(RMSE_TIME_SERIES)
 
 plt.boxplot([RMSE_TIME_SERIES,RMSE_TIME_SERIES_Forecast.transpose(), ])
 plt.xticks([1, 2], ['$Analysis$', '$Forecast$'], size=35)
-plt.savefig(DIR_exp+'/final_plot/'+pdf_name+'_ts.pdf')
+plt.savefig(DIR_exp+'NAMES'+"/"+pdf_name+'_ts.pdf')
 plt.close()
 
 

@@ -27,7 +27,7 @@ NN=500
 Var='T_2M'
 #Var='TOT_PREC'
 #COR_LEN=1
-M=10 #Number of influential points
+M=50 #Number of influential points
 # path to the optiminterp exe files:
 DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src'
 # path to the codes:
@@ -37,8 +37,8 @@ buffer=20
 inflation=1.0
 # path to the work directory:
 DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src/test/'
-std_err=0.3 # Standard deviation of the observation error (white noise)
-first_name='test01'
+std_err=0.2 # Standard deviation of the observation error (white noise)
+first_name='test01_'${std_err}
 
 # ================================================================================================
 if [ ! -d "${DIR_WORK}" ]; then
@@ -238,7 +238,7 @@ while [ $NN -lt 501 ]; do
 
          member=`expr $member + 1`
      done
-     python2 ${DIR_WORK}/Plot_final_results.py # Plot final results
+  #   python2 ${DIR_WORK}/Plot_final_results.py # Plot final results
   #  python ${DIR_WORK}/Plot_RMSEs_timeseries.py
 #     COR_LEN=`expr $COR_LEN + 1`
 #     echo ${COR_LEN}
