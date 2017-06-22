@@ -122,7 +122,6 @@ for kk in range(1,6):
             
             forecast = t_f[start_time:timesteps, start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
             for pp in range(start_time,timesteps):
-              
                 np.savetxt(here+"Trash/Forecast_" + str(pp) +"_" + str(direc) + "_"+ str(shift) + "_" + SEAS + ".csv", np.squeeze(forecast[pp,:,:]), delimiter=",")
             
             obs = t_o[start_time:timesteps, buffer:buffer + dext_lat, buffer:buffer + dext_lon]
@@ -131,21 +130,23 @@ for kk in range(1,6):
             lats_f1=lat_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
             lons_f1=lon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
             #rlats_f1 = rlat_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
-			#rlons_f1 = rlon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
-	        rlats_f1 = rlat_f[start_lat:start_lat + dext_lat]
+              #rlons_f1 = rlon_f[start_lat:start_lat + dext_lat, start_lon:start_lon + dext_lon]
+            rlats_f1 = rlat_f[start_lat:start_lat + dext_lat]
             rlons_f1 = rlon_f[start_lon:start_lon + dext_lon]
-	    for ii in range(0,forecast.shape[1]):
-	        for jj in range(0,forecast.shape[2]):
-	            forecast_resh=np.squeeze(forecast[:,ii,jj])
-	            obs_resh=np.squeeze(obs[:,ii,jj])
+            for ii in range(0,forecast.shape[1]):
+                for jj in range(0,forecast.shape[2]):
+                    forecast_resh=np.squeeze(forecast[:,ii,jj])
+                    obs_resh=np.squeeze(obs[:,ii,jj])
                     RMSE[ii,jj] = mean_squared_error(obs_resh, forecast_resh) ** 0.5
             np.savetxt(here+"Trash/RMSE_"+str(counter)+".csv", RMSE, delimiter=",")
             for rr in range(0,timesteps-start_time):
-	        np.savetxt(here+"Trash/SPREAD_"+ str(rr)+ "_" + str(counter)+".csv", np.squeeze(forecast[rr,:,:]), delimiter=",")
-        counter = counter + 1
+                
+                np.savetxt(here+"Trash/SPREAD_"+ str(rr)+ "_" + str(counter)+".csv", np.squeeze(forecast[rr,:,:]), delimiter=",")
+            counter = counter + 1
+    
             
-
-			
+    
+            
 
 
 
@@ -178,7 +179,7 @@ for tt in range(0,timesteps-start_time):
     for dd in range(1,6): # finding the standard deviation between all members over each time and then averaging them over time:
         for gg in range(1,5):
             if count < no_members:
-		
+        
                 dumm2 = dumm2 + genfromtxt(here+"Trash/Forecast_" + str(tt) +"_" + str(gg) + "_"+ str(dd) + "_" + SEAS + ".csv", delimiter=",")
             count = count +1
     dumm2 = dumm2 / no_members

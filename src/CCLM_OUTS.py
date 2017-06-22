@@ -23,7 +23,8 @@ def rand_station_locations(N=50,sed=777):
     pattern = re.compile(r"[^-\d]*([\-]{0,1}\d+\.\d+)[^-\d]*")
     results = []
     for line in data:
-        line = line.split('|')
+        
+        line = line.decode().split("|")
         for i in line:
             match = pattern.match(i)
             if match:
@@ -52,7 +53,7 @@ def rand_station_locations(N=50,sed=777):
             lon[k] = float(pairs[i][1])
             k = k + 1
 
-    return(lat.values()[0:N],lon.values()[0:N])
+    return(list(lat.values())[0:N],list(lon.values())[0:N])
 
 
 

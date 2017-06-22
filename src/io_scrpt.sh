@@ -29,14 +29,14 @@ Var='T_2M'
 #COR_LEN=1
 M=10 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/home/fallah/Documents/DATA_ASSIMILATION/Bijan/CODES/CCLM/Python_Codes/OI_FINAL/src/'
+DIR_python='/home/bijan/Documents/DATA_ASSIMILATION/OI_CCLM/src/'
 # path to the codes:
-DIR_OI='/home/fallah/Documents/DATA_ASSIMILATION/Bijan/CODES/CCLM/Python_Codes/OI_FINAL/inst/'
+DIR_OI='/home/bijan/Documents/DATA_ASSIMILATION/OI_CCLM/inst/'
 no_members=20 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/scratch/users/fallah/test/'
+DIR_WORK='/home/bijan/Documents/DATA_ASSIMILATION/OI_CCLM/test/'
 first_name='test'
 std_err=0.3 # Standard deviation of the observation error (white noise)
 # ================================================================================================
@@ -226,10 +226,10 @@ while [ $NN -lt 501 ]; do
          # ==============================  Python calls: =================================================
 
          #python ${DIR_WORK}${NAME}/PLOT_Stations.py
-         python ${DIR_WORK}${NAME}/Plot_RMSE_SPREAD_main.py
-         python ${DIR_WORK}${NAME}/make_pseudo_obs.py
-         python ${DIR_WORK}${NAME}/Create_Input_FIles.py
-         python ${DIR_WORK}${NAME}/run_octave.py
+         python2 ${DIR_WORK}${NAME}/Plot_RMSE_SPREAD_main.py
+         python2 ${DIR_WORK}${NAME}/make_pseudo_obs.py
+         python2 ${DIR_WORK}${NAME}/Create_Input_FIles.py
+         python2 ${DIR_WORK}${NAME}/run_octave.py
          
 
          # ===============================================================================================
@@ -237,7 +237,7 @@ while [ $NN -lt 501 ]; do
 
          member=`expr $member + 1`
      done
-     python ${DIR_WORK}/Plot_final_results.py # Plot final results
+     python2 ${DIR_WORK}/Plot_final_results.py # Plot final results
   #  python ${DIR_WORK}/Plot_RMSEs_timeseries.py
 #     COR_LEN=`expr $COR_LEN + 1`
 #     echo ${COR_LEN}

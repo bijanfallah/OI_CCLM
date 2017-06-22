@@ -109,12 +109,12 @@ for jj in range(0,NO):
 
 
     import csv
-    from itertools import izip
+    #from itertools import izip
     from itertools import repeat
     with open(dir_to_ensemble + 'Trash/Stations_DATA_' + str(jj) + '.csv', 'wb') as f:
         writer = csv.writer(f)
         for i in range(0, month_length):
-            writer.writerows(izip(rlon_s,rlat_s,Temp_Station[:,i],Temp_Station_dirty[:,i],list(repeat(i,NN))))
+            writer.writerows(zip(rlon_s,rlat_s,Temp_Station[:,i],Temp_Station_dirty[:,i],list(repeat(i,NN))))
 
 
 
