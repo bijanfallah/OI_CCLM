@@ -29,16 +29,17 @@ Var='T_2M'
 #COR_LEN=1
 M=10 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/home/bijan/Documents/DATA_ASSIMILATION/OI_CCLM/src/'
+DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src'
 # path to the codes:
-DIR_OI='/home/bijan/Documents/DATA_ASSIMILATION/OI_CCLM/inst/'
+DIR_OI='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/inst/'
 no_members=20 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/home/bijan/Documents/DATA_ASSIMILATION/OI_CCLM/test/'
-first_name='test'
+DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src/test/'
 std_err=0.3 # Standard deviation of the observation error (white noise)
+first_name='test01'
+
 # ================================================================================================
 if [ ! -d "${DIR_WORK}" ]; then
   mkdir ${DIR_WORK}
