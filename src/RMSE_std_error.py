@@ -10,12 +10,12 @@ NN=500
 #COR_LEN=1
 M=50 #Number of influential points
 #DIR='/home/fallah/Documents/DATA_ASSIMILATION/Bijan/CODES/CCLM/Python_Codes/historical_runs_yearly/src/TEMP'
-DIR1='/scratch/users/fallah/exp00_cor_length/1.0/20_'+SEAS1+'/'
-DIR2='/scratch/users/fallah/exp00_cor_length/1.0/20_'+SEAS2+'/'
+DIR1='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/src/test/1.0/20_'+SEAS1+'/'
+DIR2='/daten/cady/DATA_ASSIMILATION_TESTS/OI_CCLM/src/test/1.0/20_'+SEAS2+'/'
 VAR='T_2M'
 # ===============================================================================
 
-pdf_name= '/scratch/users/fallah/exp00_cor_length/1.0/RMSE_L_'+ '_' + str(month_length) + '_' + str(NN) + '_' + str(M) + '_' + '.pdf'
+pdf_name= '/daten/cady/DATA_ASSIMILATION_TESTS/RMSE_L_'+ '_' + str(month_length) + '_' + str(NN) + '_' + str(M) + '_' + '.pdf'
 import numpy as np
 import csv
 import os
@@ -28,18 +28,18 @@ k=0
 
 for i in range(500,600,100):
     kk=0
-    #for j in np.arange(0.1,3,0.3):
+    for j in np.arange(0.10,2.1,0.1):
     #for j in ["0,1" ,  "0,4",  "0,7",  "1,0" ,  "1,3",  "1,6",  "1,9",  "2,11",  "2,41",  "2,71","3,1"]:
     #for j in ["0,01" ,  "0,06",  "0,11",  "0,16" ,  "0,21",  "0,26",  "0,31",  "0,36",  "0,41",  "0,46"]:
-    for j in ["0,1",  "0,2",  "0,3",  "0,4",  "0,5",  "0,6",  "0,7",  "0,8",  "0,9",  "1,0" ,  "1,1", "1,2",  "1,3",  "1,4",  "1,5",  "1,6",  "1,7",  "1,8",  "1,9",  "2,0" ,  "2,1",  "2,2", "2,3",  "2,4",  "2,5",  "2,6",  "2,7",  "2,8",  "2,9",  "3,0" ,  "3,1",  "3,2",  "3,3", "3,4",  "3,5",
-              "3,6", "3,7",  "3,8",  "3,9",  "4,0" ,  "4,1",  "4,2",  "4,3",  "4,4",
-              "4,5",  "4,6",  "4,7",  "4,8",  "4,9",  "5,0" ,  "5,1",  "5,2",  "5,3",  "5,4",  "5,5",
-              "5,6",  "5,7",  "5,8",  "5,9",  "6,0" ]:
+    #for j in ["0,1",  "0,2",  "0,3",  "0,4",  "0,5",  "0,6",  "0,7",  "0,8",  "0,9",  "1,0" ,  "1,1", "1,2",  "1,3",  "1,4",  "1,5",  "1,6",  "1,7",  "1,8",  "1,9",  "2,0" ,  "2,1",  "2,2", "2,3",  "2,4",  "2,5",  "2,6",  "2,7",  "2,8",  "2,9",  "3,0" ,  "3,1",  "3,2",  "3,3", "3,4",  "3,5",
+     #         "3,6", "3,7",  "3,8",  "3,9",  "4,0" ,  "4,1",  "4,2",  "4,3",  "4,4",
+     #         "4,5",  "4,6",  "4,7",  "4,8",  "4,9",  "5,0" ,  "5,1",  "5,2",  "5,3",  "5,4",  "5,5",
+     #         "5,6",  "5,7",  "5,8",  "5,9",  "6,0" ]:
         
         #names = 'TEMP/RMSE_last_m_' + SEAS + '_' + str(M) + '_' + str(j) + '_' + str(i) + '.pdf.csv'
-        names1 = DIR1 + 'Sensitivity_no_members_' + str(j) + '_' +  str(i) + '_19_1.0_20/Trash/RMSE_RMSE_ANALYSIS_' + SEAS1 + '_' + str(M) + '_' + str(j) + '_' + str(i) + '_'+ VAR + '_' +'19.pdf19.csv'
+        names1 = DIR1 + 'test01_' + str(j) + '0_1.7_' +  str(i) + '_19_1.0_20/Trash/RMSE_RMSE_ANALYSIS_' + SEAS1 + '_' + str(M) + '_1.7' + '_' + str(i) + '_'+ VAR + '_' +'19.pdf19.csv'
         
-        names2 = DIR2 + 'Sensitivity_no_members_' + str(j) + '_' +  str(i) + '_19_1.0_20/Trash/RMSE_RMSE_ANALYSIS_' + SEAS2 + '_' + str(M) + '_' + str(j) + '_' + str(i) + '_'+ VAR + '_' +'19.pdf19.csv' 
+        names2 = DIR2 + 'test01_' + str(j) + '0_2.1_' +  str(i) + '_19_1.0_20/Trash/RMSE_RMSE_ANALYSIS_' + SEAS2 + '_' + str(M) + '_2.1'  + '_' + str(i) + '_'+ VAR + '_' +'19.pdf19.csv' 
         
         result1 = np.array(list(csv.reader(open(names1, "rb"), delimiter=','))).astype('float')
 	result2 = np.array(list(csv.reader(open(names2, "rb"), delimiter=','))).astype('float')
@@ -56,7 +56,7 @@ import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 fig.set_size_inches(14, 10)
 #for i in range(16):
-x=np.arange(.1,6.1,.1)
+x=np.arange(.10,2.1,.1)
 i=0
 #for i in range(7):
 #    ax.plot(x,res[i,:],'o-', label=str(i*100+500), lw=3, alpha=.7, ms=10)
