@@ -29,16 +29,17 @@ Var='T_2M'
 #COR_LEN=1
 M=50 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/src'
+DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS_mean_of_error_JJA/OI_CCLM/src'
 # path to the codes:
-DIR_OI='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/inst/'
+DIR_OI='/daten/cady/DATA_ASSIMILATION_TESTS_mean_of_error_JJA/OI_CCLM/inst/'
 no_members=20 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS_JJA/OI_CCLM/src/test/'
-std_err=666 # Standard deviation of the observation error (white noise)
-first_name='test01_'${std_err}
+DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS_mean_of_error_JJA/OI_CCLM/src/test/'
+std_err=1.0 # Standard deviation of the observation error (white noise)
+mean_err=0.5 # mean of the observation error (white noise)
+first_name='test01_'${std_err}_${mean_err}
 
 # ================================================================================================
 if [ ! -d "${DIR_WORK}" ]; then
@@ -98,6 +99,7 @@ while [ $NN -lt 501 ]; do
          var2=$(echo ${DIR_WORK}${NAME})
          sed -i "s%$var1%$var2%g" ${DIR_WORK}${NAME}/make_pseudo_obs.py
          sed -i "s/.3, month_length/$std_err, month_length/g" ${DIR_WORK}${NAME}/make_pseudo_obs.py
+	 sed -i "s/.normal(0/.normal($mean_err/g" ${DIR_WORK}${NAME}/make_pseudo_obs.py
          # ========================================== END MEKE PSEUDO ======================================================
 
          # ======================================= Create INPUT FILES ======================================================
