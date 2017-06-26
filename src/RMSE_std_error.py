@@ -150,7 +150,7 @@ ax.yaxis.set_ticks_position('left')
 ax.xaxis.set_ticks_position('bottom')
 ax.set_title("", y=1.05)
 ax.set_ylabel(r"$RMSE$", labelpad=5,size=32)
-ax.set_xlabel(r"$L$", labelpad=5,size=32)
+ax.set_xlabel(r"$\sigma_{Obs. Err.}$", labelpad=5,size=32)
 
 plt.xlim(0,(6.2))
 plt.ylim(0.12,(0.2))
