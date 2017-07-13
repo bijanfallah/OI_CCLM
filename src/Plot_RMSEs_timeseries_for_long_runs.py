@@ -58,6 +58,7 @@ time_series_Nature = np.zeros(month_length)
 #                dumm2 = genfromtxt(here+'NAMES'+'/'+"Trash/Forecast_" + str(ii) +"_" + str(jj) + "_"+ str(kk) + "_" + SEAS + ".csv", delimiter=",")
 #                time_series[ii,counter] = np.mean(dumm2)
 #            counter = counter + 1
+dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src/test/1.0/4_JJA/long_runs_.3_0.0_1.7_500_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
 
 dext_lon = np.array(t_o.shape[2] - (2 * buffer))
 dext_lat = np.array(t_o.shape[1] - (2 * buffer))
@@ -128,15 +129,19 @@ time_series_min  = np.min(RMSE_time,0)
 
 model = np.polyfit(time, time_series_mean , 1)
 predicted = np.polyval(model, time)
-
+model2 = np.polyfit(time, dum , 1)
+predicted2 = np.polyval(model2, time)
 
 fig = plt.figure(222)
 fig.set_size_inches(14, 10)
-plt.fill_between(time, time_series_max, time_series_min, color='darkgray')  
-plt.plot(time, time_series_mean, color="black", lw=2, alpha=0.7)
-plt.plot(time, predicted, color="black", lw=2,linestyle='--',dashes=(5, 2), alpha=0.7)
-plt.xlabel("Time", fontsize=30,fontname="Times New Roman")
-plt.ylabel("RMSE", fontsize=30,fontname="Times New Roman")
+plt.fill_between(time, time_series_max, time_series_min, color='darkolivegreen')  
+plt.plot(time, time_series_mean, color="white", lw=3, alpha=1)
+plt.plot(time, predicted, color="black", linestyle='--',dashes=(5, 2),lw=4, alpha=0.7)
+plt.plot(time, dum, color="black", lw=3, alpha=1)
+plt.plot(time, predicted2, color="black",linestyle='--',dashes=(5, 2), lw=4, alpha=0.7)
+
+plt.xlabel("$Time$", fontsize=30,fontname="Times New Roman")
+plt.ylabel("$RMSE$", fontsize=30,fontname="Times New Roman")
 plt.tick_params(axis='both', which='major', labelsize=10)
 xlim([0,month_length+1])
 plt.savefig(here+''+"RMSE_Time_series_"+Vari+'_'+SEAS+".pdf", bbox_inches="tight");
