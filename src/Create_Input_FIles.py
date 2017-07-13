@@ -108,6 +108,7 @@ for i in range(0, members):
         for ii in range(0, month_length):
             #writer.writerows(izip(f.lon[f.Time == ii], f.lat[f.Time == ii], f.Vals[f.Time == ii]
             #                      , f.Time[f.Time == ii], list(repeat(Vari[ii], NN))))
+            print(ii)
             writer.writerows(izip(f.lon[f.Time == ii], f.lat[f.Time == ii], f.Vals[f.Time == ii]
                                   , f.Time[f.Time == ii], list(Vari)))
 

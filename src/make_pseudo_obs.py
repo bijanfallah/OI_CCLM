@@ -1,5 +1,5 @@
 def extract_pseudo(NN=2000,dir='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/',
-                   name='member_relax_3_big_00_T_2M_ts_splitseas_1990_1999_DJF.nc',var='T_2M',month_length=20, buffer = 20):
+                   name='member_relax_3_big_00_T_2M_ts_splitseas_1979_2015_DJF.nc',var='T_2M',month_length=20, buffer = 20):
 
     '''
     :param nn: number of observations, no: number of members
@@ -68,12 +68,12 @@ def extract_pseudo(NN=2000,dir='/work/bb1029/b324045/work5/03/member_relax_3_big
     return(Interp_Vals_dirty, Interp_Vals, TT[0:NN], SS[0:NN], t_o[0:month_length,:,:], rlon_o, rlat_o)
 
 # ========================================= NAMELIST ===============================================
-month_length=10
+month_length=20
 SEAS="DJF"
 NN=600#Number of Observations
 #dir='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/'
 dir='NETCDFS_CCLM/03/member_relax_3_big_00/post/'
-name = 'member_relax_3_big_00_T_2M_ts_splitseas_1990_1999_' + SEAS + '.nc'
+name = 'member_relax_3_big_00_T_2M_ts_splitseas_1979_2015_' + SEAS + '.nc'
 NO=20  # number of ensemble members
 buffer=20
 dir_to_ensemble = "path_dir"+"/"
