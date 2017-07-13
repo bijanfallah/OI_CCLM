@@ -21,7 +21,7 @@
 
 set -ex
 # ====================================== NAMELIST ======================================================================
-month_length=10
+month_length=36
 SEAS="JJA"
 NN=500
 Var='T_2M'
@@ -29,17 +29,17 @@ Var='T_2M'
 #COR_LEN=1
 M=50 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/daten/cady/DATA_ASSIMILATION_TESTS_mean_of_error_JJA/OI_CCLM/src'
+DIR_python='/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src'
 # path to the codes:
-DIR_OI='/daten/cady/DATA_ASSIMILATION_TESTS_mean_of_error_JJA/OI_CCLM/inst/'
-no_members=20 #----
+DIR_OI='/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/inst/'
+no_members=4 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/daten/cady/DATA_ASSIMILATION_TESTS_mean_of_error_JJA/OI_CCLM/src/test/'
-std_err=1.0 # Standard deviation of the observation error (white noise)
-mean_err=0.5 # mean of the observation error (white noise)
-first_name='test01_'${std_err}_${mean_err}
+DIR_WORK='/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src/test/'
+std_err=5 # Standard deviation of the observation error (white noise)
+mean_err=0.0 # mean of the observation error (white noise)
+first_name='long_runs_'${std_err}_${mean_err}
 
 # ================================================================================================
 if [ ! -d "${DIR_WORK}" ]; then
@@ -68,7 +68,7 @@ DIR_WORK=${DIR_WORK}/${inflation}/${no_members}_${SEAS}/
 while [ $NN -lt 501 ]; do
 # COR_LEN=1
 # while [ $COR_LEN -lt 20 ]; do
-     member=19    # -------------------------------------------------------
+     member=3    # -------------------------------------------------------
      while [ $member -lt $no_members ]; do
          NAME=${first_name}
          NAME_it=${NAME}_${COR_LEN}_${NN}_

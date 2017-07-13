@@ -4,7 +4,7 @@
 set -ex
 NOO=1
 here=$(pwd)
-while [ $NOO -lt 21 ]; do
+while [ $NOO -lt 5 ]; do
  sed -i "s/no_members=9999 #----/no_members=$NOO #----/g" ${here}/io_scrpt.sh
  ./io_scrpt.sh
  sed -i "s/no_members=$NOO #----/no_members=9999 #----/g" ${here}/io_scrpt.sh

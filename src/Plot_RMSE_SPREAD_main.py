@@ -66,7 +66,7 @@ SEAS='DJF'
 Vari   = 'T_2M'
 #Vari   = 'TOT_PREC'
 buffer=20
-name_2 = 'member_relax_3_big_00_' + Vari + '_ts_splitseas_1990_1999_' + SEAS + '.nc'
+name_2 = 'member_relax_3_big_00_' + Vari + '_ts_splitseas_1979_2015_' + SEAS + '.nc'
 PDF1    = 'ENSEMBLE_RMSE_' + SEAS + '_'+ Vari +'.pdf'
 PDF2    = 'ENSEMBLE_SPREAD_' + SEAS + '_'+ Vari +'.pdf'
 timesteps=10   # number of the seasons (years)
@@ -85,7 +85,7 @@ if not os.path.exists(here+"Trash"):
     os.makedirs(here+"Trash")
 
 counter = 0
-for kk in range(1,6):
+for kk in range(4,5):# modified for the 4 members
     shift = kk
     for i in range(1,5):
         if counter < no_members:
@@ -111,7 +111,7 @@ for kk in range(1,6):
             dext_lon = t_o.shape[2] - (2 * buffer)
             dext_lat = t_o.shape[1] - (2 * buffer)
             
-            name_1 = 'member_relax_'+ str(direc) +'_big_0' + str(shift) +'_'+ Vari +'_ts_splitseas_1990_1999_' + SEAS + '.nc'
+            name_1 = 'member_relax_'+ str(direc) +'_big_0' + str(shift) +'_'+ Vari +'_ts_splitseas_1979_2015_' + SEAS + '.nc'
             
             
             # ==============================================================================================
@@ -176,7 +176,7 @@ SPREAD_final = np.mean(summ,0)
 for tt in range(0,timesteps-start_time):
     dumm2 = np.zeros((forecast.shape[1], forecast.shape[2]))
     count = 0
-    for dd in range(1,6): # finding the standard deviation between all members over each time and then averaging them over time:
+    for dd in range(4,5): # finding the standard deviation between all members over each time and then averaging them over time: #changed
         for gg in range(1,5):
             if count < no_members:
         
