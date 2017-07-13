@@ -126,11 +126,15 @@ time_series_mean = np.mean(RMSE_time,0)
 time_series_max  = np.max(RMSE_time,0) 
 time_series_min  = np.min(RMSE_time,0)
 
+model = np.polyfit(time, time_series_mean , 1)
+predicted = np.polyval(model, time)
+
 
 fig = plt.figure(222)
 fig.set_size_inches(14, 10)
 plt.fill_between(time, time_series_max, time_series_min, color='darkgray')  
 plt.plot(time, time_series_mean, color="black", lw=2, alpha=0.7)
+plt.plot(time, predicted, color="black", lw=2,linestyle='--',dashes=(5, 2), alpha=0.7)
 plt.xlabel("Time", fontsize=30,fontname="Times New Roman")
 plt.ylabel("RMSE", fontsize=30,fontname="Times New Roman")
 plt.tick_params(axis='both', which='major', labelsize=10)
