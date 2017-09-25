@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # ======================================================================================================================
 # .______    __         __       ___      .__   __.     _______    ___       __       __          ___       __    __
 # |   _  \  |  |       |  |     /   \     |  \ |  |    |   ____|  /   \     |  |     |  |        /   \     |  |  |  |
@@ -9,37 +10,34 @@
 #
 #                                                info@bijan-fallah.com
 # ======================================================================================================================
-# TODO: check the effect of the ensemble number on the RMSE
-# TODO: check the effect of inflation!
-# TODO: check the effect of observational error!
-# TODO: find the optimium correlation length
-
-
-
-
 
 
 set -ex
 # ====================================== NAMELIST ======================================================================
 month_length=36
 SEAS="JJA"
+#SEAS="DJF"
 NN=500
 Var='T_2M'
 #Var='TOT_PREC'
 #COR_LEN=1
 M=50 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src'
+DIR_python='/home/bijan/Documents/DATA_ASSIMILATION/OI_EOBS_TEST/src'
 # path to the codes:
-DIR_OI='/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/inst/'
+DIR_OI='/home/bijan/Documents/DATA_ASSIMILATION/OI_EOBS_TEST/inst/'
 no_members=4 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src/test/'
-std_err=5 # Standard deviation of the observation error (white noise)
+DIR_WORK='/home/bijan/SCRATCH/'
+#std_err=0.1 # Standard deviation of the observation error (white noise)
 mean_err=0.0 # mean of the observation error (white noise)
-first_name='long_runs_'${std_err}_${mean_err}
+SNR=3 #
+
+std_err=$(python -c "print((1.113/${SNR})**0.5)")
+echo $std_err
+first_name='EOBS_'${SNR}_${mean_err}
 
 # ================================================================================================
 if [ ! -d "${DIR_WORK}" ]; then
@@ -68,7 +66,7 @@ DIR_WORK=${DIR_WORK}/${inflation}/${no_members}_${SEAS}/
 while [ $NN -lt 501 ]; do
 # COR_LEN=1
 # while [ $COR_LEN -lt 20 ]; do
-     member=3    # -------------------------------------------------------
+     member=0    # -------------------------------------------------------
      while [ $member -lt $no_members ]; do
          NAME=${first_name}
          NAME_it=${NAME}_${COR_LEN}_${NN}_

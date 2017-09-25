@@ -21,24 +21,28 @@ def plot_rmse_spread(PDF="name.pdf",vari="RMSE",VAL=np.zeros((10,10,10)),x=10,y=
     #Plot_CCLM(dir_mistral='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/', name=name_2, bcolor='black',
     #          var=Vari, flag='FALSE', color_map='TRUE', alph=1, grids='FALSE', grids_color='red', rand_obs='FALSE',
     #          NN=NN)
-    Plot_CCLM(dir_mistral='NETCDFS_CCLM/03/member_relax_3_big_00/post/', name=name_2, bcolor='black',
+    Plot_CCLM(dir_mistral='NETCDFS_CCLM/eobs/', name=name_2, bcolor='black',
               var=Vari, flag='FALSE', color_map='TRUE', alph=1, grids='FALSE', grids_color='red', rand_obs='FALSE',
               NN=NN)
 
 
     if vari == "RMSE":
-        v = np.linspace(0, .8, 9, endpoint=True)
+#        v = np.linspace(0, .8, 9, endpoint=True)
+        v = np.linspace(0, 4.8, 9, endpoint=True)  
     else:
-        v = np.linspace(0, .8, 9, endpoint=True)
+#        v = np.linspace(0, .8, 9, endpoint=True)
+        v = np.linspace(0, .8, 9, endpoint=True)  
 
     if vari == "RMSE":
         cs = plt.contourf(lons_f1,lats_f1,VAL, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
+     #   cs = plt.pcolor(lons_f1,lats_f1,VAL, cmap=plt.cm.terrain) 
         cb = plt.colorbar(cs)
         cb.set_label('RMSE [K]', fontsize=20)
         cb.ax.tick_params(labelsize=20)
     else:
         if vari == "SPREAD":
-            cs = plt.contourf(lons_f1, lats_f1, VAL, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
+      #      cs = plt.pcolor(lons_f1, lats_f1, VAL,cmap=plt.cm.terrain)
+            cs = plt.contourf(lons_f1,lats_f1,VAL, v, transform=ccrs.PlateCarree(), cmap=plt.cm.terrain)
             cb = plt.colorbar(cs)
             cb.set_label('SPREAD [K]', fontsize=20)
             cb.ax.tick_params(labelsize=20)
@@ -52,6 +56,9 @@ def plot_rmse_spread(PDF="name.pdf",vari="RMSE",VAL=np.zeros((10,10,10)),x=10,y=
                color='black', linewidth=4)
     plt.vlines(x=max(rlon_o[buffer:-buffer]), ymin=min(rlat_o[buffer:-buffer]), ymax=max(rlat_o[buffer:-buffer]),
                color='black', linewidth=4)
+     # added 22.08.2017
+    plt.ylim([min(rlat_o[buffer:-buffer]),max(rlat_o[buffer:-buffer])])
+    plt.xlim([min(rlon_o[buffer:-buffer]),max(rlon_o[buffer:-buffer])])           
     plt.savefig(PDF)
     plt.close()
 
@@ -66,7 +73,8 @@ SEAS='DJF'
 Vari   = 'T_2M'
 #Vari   = 'TOT_PREC'
 buffer=20
-name_2 = 'member_relax_3_big_00_' + Vari + '_ts_splitseas_1979_2015_' + SEAS + '.nc'
+#tg_0.44deg_rot_v15.0_JJA_1979_2015_remapbil.nc
+name_2 = 'tg_0.44deg_rot_v15.0_' + SEAS + '_1979_2015_remapbil.nc'
 PDF1    = 'ENSEMBLE_RMSE_' + SEAS + '_'+ Vari +'.pdf'
 PDF2    = 'ENSEMBLE_SPREAD_' + SEAS + '_'+ Vari +'.pdf'
 timesteps=10   # number of the seasons (years)
@@ -74,10 +82,26 @@ start_time=0
 #t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/', # the observation (default run without shifting)
 #                                            name=name_2,
 #                                            var=Vari)
-t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='NETCDFS_CCLM/03/member_relax_3_big_00/post/', # the observation (default run without shifting)
+t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='NETCDFS_CCLM/eobs/', # the observation (default run without shifting)
                                             name=name_2,
                                             var=Vari)
+##TODO: make it a function:
+def f(x):
+   if x==-9999:
+      return float('NaN')
+   else:
+      return x
+f2 = np.vectorize(f)
+t_o= f2(t_o)
+t_o=t_o.squeeze()+273.15
 
+
+##end todo
+
+
+
+
+#print(t_o.shape,np.squeeze(t_o[1,10,10]), rlat_o[10],'-----------here---------------------------------------------------------')
 here = "path_dir"+"/"
 no_members=20
 # ==============================================================================================
@@ -137,10 +161,14 @@ for kk in range(4,5):# modified for the 4 members
                 for jj in range(0,forecast.shape[2]):
                     forecast_resh=np.squeeze(forecast[:,ii,jj])
                     obs_resh=np.squeeze(obs[:,ii,jj])
-                    RMSE[ii,jj] = mean_squared_error(obs_resh, forecast_resh) ** 0.5
-            np.savetxt(here+"Trash/RMSE_"+str(counter)+".csv", RMSE, delimiter=",")
+                    if (np.isnan(obs_resh[0])== False) and (np.isinf(obs_resh[0])== False):
+                       # print(obs_resh)
+                        RMSE[ii,jj] = mean_squared_error(obs_resh[np.isnan(obs_resh)==False], forecast_resh[np.isnan(obs_resh)==False]) ** 0.5
+                    else:
+                        #RMSE[ii,jj] = float('NaN')
+                        RMSE[ii,jj] = float(0.0) # to ignore the edges !! in plotting 
+                        np.savetxt(here+"Trash/RMSE_"+str(counter)+".csv", RMSE, delimiter=",")
             for rr in range(0,timesteps-start_time):
-                
                 np.savetxt(here+"Trash/SPREAD_"+ str(rr)+ "_" + str(counter)+".csv", np.squeeze(forecast[rr,:,:]), delimiter=",")
             counter = counter + 1
     

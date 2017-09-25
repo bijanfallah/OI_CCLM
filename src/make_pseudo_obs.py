@@ -55,7 +55,7 @@ def extract_pseudo(NN=2000,dir='/work/bb1029/b324045/work5/03/member_relax_3_big
   
 
     for k in range(0,NN):
-       
+        
         noise[k,:] = np.random.normal(0, .3, month_length) # for sesonal values T_2M summer JJA
      
 
@@ -72,8 +72,8 @@ month_length=20
 SEAS="DJF"
 NN=600#Number of Observations
 #dir='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/'
-dir='NETCDFS_CCLM/03/member_relax_3_big_00/post/'
-name = 'member_relax_3_big_00_T_2M_ts_splitseas_1979_2015_' + SEAS + '.nc'
+dir='NETCDFS_CCLM/eobs/'
+name = 'tg_0.44deg_rot_v15.0_' + SEAS + '_1979_2015_remapbil.nc'
 NO=20  # number of ensemble members
 buffer=20
 dir_to_ensemble = "path_dir"+"/"

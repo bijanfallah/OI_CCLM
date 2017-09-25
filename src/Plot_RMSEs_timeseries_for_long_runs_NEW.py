@@ -11,8 +11,8 @@ from RMSE_MAPS_INGO import read_data_from_mistral as rdfm
 # ------------------------ Namelist -------------------------------------------
 
 NN=500
-SEAS='DJF'
-#SEAS='JJA'
+#SEAS='DJF'
+SEAS='JJA'
 Vari   = 'T_2M'
 #Vari   = 'TOT_PREC'
 month_length=36   # number of the seasons (years)
@@ -60,8 +60,8 @@ time_series_Nature = np.zeros(month_length)
 #            counter = counter + 1
 #dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src/test/1.0/4_JJA/long_runs_.3_0.0_1.7_500_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
 
-dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src/test/1.0/4_DJF/long_runs_.1_0.0_2.1_500_3_1.0_4/Trash/RMSE_ANALYSIS_DJF_50_2.1_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
-
+#dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_walter_comment/1.0/4_DJF/walter_comment_3.0_0.0_2.1_500_3_1.0_4/Trash/RMSE_ANALYSIS_DJF_50_2.1_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
+dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_walter_comment/1.0/4_JJA/walter_comment_3.0_0.0_1.7_500_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
 dext_lon = np.array(t_o.shape[2] - (2 * buffer))
 dext_lat = np.array(t_o.shape[1] - (2 * buffer))
 print buffer, t_o.shape, t_1.shape

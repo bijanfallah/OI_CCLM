@@ -18,7 +18,7 @@ def rand_station_locations(N=50,sed=777):
     #data = requests.get(
         #"http://www.ecad.eu/download/ensembles/data/ensembles_all_stations_v13.1.txt")  # read only 20 000 chars
     #    "http://www.ecad.eu/download/ensembles/data/Version14.0/ensembles_tg_stations_v14.0.txt") # new version!
-    data = open("/home/bijan/Documents/DATA_ASSIMILATION/OI_FINAL_Walters_comment/ensembles_tg_stations_v14.0.txt")    
+    data = open("bles_tg_stations_v14.0.txt")    
     Data = []
 
     pattern = re.compile(r"[^-\d]*([\-]{0,1}\d+\.\d+)[^-\d]*")

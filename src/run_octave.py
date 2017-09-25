@@ -76,18 +76,26 @@ for i in range(0,forecast.shape[1]):
     for j in range(0,forecast.shape[2]):
         forecast_resh=np.squeeze(forecast[:,i,j])
         obs_resh=np.squeeze(obs[:,i,j])
-        RMSE[i,j] = mean_squared_error(obs_resh, forecast_resh) ** 0.5 # Calculating the RMSEs for each grid point
-        
+        if (np.isnan(obs_resh[0])== False) and (np.isinf(obs_resh[0])== False):
+            RMSE[i,j] = mean_squared_error(obs_resh, forecast_resh) ** 0.5 # Calculating the RMSEs for each grid point
+        else:
+            RMSE[i,j] = float(0.0)
         
 for i in range(0,forecast.shape[0]):
     forecast_resh_ts=np.squeeze(forecast[i,:,:])
     obs_resh_ts=np.squeeze(obs[i,:,:])
-    RMSE_TIME_SERIES[i] = mean_squared_error(obs_resh_ts, forecast_resh_ts) ** 0.5 #Calculating RMSEs for each month for Analysis
+    if (np.isnan(obs_resh_ts[0])== False) and (np.isinf(obs_resh_ts[0])== False):
+        RMSE_TIME_SERIES[i] = mean_squared_error(obs_resh_ts, forecast_resh_ts) ** 0.5 #Calculating RMSEs for each month for Analysis
+    else:
+        RMSE_TIME_SERIES[i] = float(0.0)
 
 for i in range(0,forecast.shape[0]):
     forecast_orig_ts=np.squeeze(t_f[i,:,:])
     obs_resh_ts=np.squeeze(obs[i,:,:])
-    RMSE_TIME_SERIES_Forecast[i] = mean_squared_error(obs_resh_ts, forecast_orig_ts) ** 0.5 #Calculating RMSEs for each month for forecast
+    if (np.isnan(obs_resh_ts[0])== False) and (np.isinf(obs_resh_ts[0])== False):
+        RMSE_TIME_SERIES_Forecast[i] = mean_squared_error(obs_resh_ts, forecast_orig_ts) ** 0.5 #Calculating RMSEs for each month for forecast
+    else:
+        RMSE_TIME_SERIES_Forecast[i] = float(0.0)
 
 
 fig = plt.figure('1')
@@ -104,10 +112,11 @@ pc = ccrs.PlateCarree()
 ax = plt.axes(projection=rp)
 ax.coastlines('50m', linewidth=0.8)
 if SEAS[0] == "D":
-    v = np.linspace(0, .8, 9, endpoint=True)# the limits of the colorbar for winter
+#    v = np.linspace(0, .8, 9, endpoint=True)# the limits of the colorbar for winter
+    v = np.linspace(0, 4.8, 9, endpoint=True)
 else:
-    v = np.linspace(0, .8, 9, endpoint=True)# the limits of the colorbar for other seasons
-
+#    v = np.linspace(0, .8, 9, endpoint=True)# the limits of the colorbar for other seasons
+    v = np.linspace(0, 0.8, 9, endpoint=True)
 
 # Write the RMSE mean of the member in a file
 import csv
@@ -151,9 +160,11 @@ Plot_CCLM(dir_mistral='NETCDFS_CCLM/03/member_relax_3_big_00/post/',name=name_2,
 xs, ys, zs = rp.transform_points(pc,
                                  np.array([-17, 105.0]),# Adjust for other domains!
                                  np.array([3, 60])).T   # Adjust for other domains!
-
 ax.set_xlim(xs)
-ax.set_ylim(ys)
+ax.set_ylim(ys)                                 
+plt.ylim([min(rlat_o[buffer:-buffer]),max(rlat_o[buffer:-buffer])])
+plt.xlim([min(rlon_o[buffer:-buffer]),max(rlon_o[buffer:-buffer])])  
+
 
 #prs(PDF=DIR_exp+'Trash/'+pdf_name,vari="RMSE",VAL=RMSE,x=forecast.shape[1],y=forecast.shape[2])
 
