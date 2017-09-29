@@ -36,8 +36,10 @@ def extract_pseudo(NN=2000,dir='/work/bb1029/b324045/work5/03/member_relax_3_big
     points[:, 2] = TT[0:NN]
 
     t_o, lat_o, lon_o, rlat_o, rlon_o = rdfm(dir, name, var)
-
-
+    t_o = t_o.data
+    t_o[t_o==-9999]=float('nan')
+    t_o[np.isnan(t_o)]=np.nanmean(t_o)
+    
 
 
  
@@ -72,7 +74,7 @@ month_length=20
 SEAS="DJF"
 NN=600#Number of Observations
 #dir='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/'
-dir='NETCDFS_CCLM/eobs/'
+dir='/NETCDFS_CCLM/eobs/'
 name = 'tg_0.44deg_rot_v15.0_' + SEAS + '_1979_2015_remapbil.nc'
 NO=20  # number of ensemble members
 buffer=20

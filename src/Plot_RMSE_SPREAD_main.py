@@ -28,7 +28,7 @@ def plot_rmse_spread(PDF="name.pdf",vari="RMSE",VAL=np.zeros((10,10,10)),x=10,y=
 
     if vari == "RMSE":
 #        v = np.linspace(0, .8, 9, endpoint=True)
-        v = np.linspace(0, 4.8, 9, endpoint=True)  
+        v = np.linspace(0, 3.2, 9, endpoint=True)  
     else:
 #        v = np.linspace(0, .8, 9, endpoint=True)
         v = np.linspace(0, .8, 9, endpoint=True)  
@@ -85,15 +85,22 @@ start_time=0
 t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='NETCDFS_CCLM/eobs/', # the observation (default run without shifting)
                                             name=name_2,
                                             var=Vari)
+
 ##TODO: make it a function:
-def f(x):
-   if x==-9999:
-      return float('NaN')
-   else:
-      return x
-f2 = np.vectorize(f)
-t_o= f2(t_o)
-t_o=t_o.squeeze()+273.15
+#def f(x):
+#   if x==-9999:
+#      return float('NaN')
+#   else:
+#      return x
+#f2 = np.vectorize(f)
+#t_o= f2(t_o)
+t_o=t_o.data
+t_o[t_o<-900]=float('NaN')
+#t_o[np.isnan(t_o)]=np.nanmean(np.nanmean(t_o,axis=(0,1)))
+t_o[np.isnan(t_o)]=float('NaN')
+#print('88888888888888888888888888888888888888888888888888888888888')
+#print(np.nanmean(np.nanmean(t_o,axis=(0,1))))
+#print('88888888888888888888888888888888888888888888888888888888888')
 
 
 ##end todo
@@ -161,13 +168,16 @@ for kk in range(4,5):# modified for the 4 members
                 for jj in range(0,forecast.shape[2]):
                     forecast_resh=np.squeeze(forecast[:,ii,jj])
                     obs_resh=np.squeeze(obs[:,ii,jj])
-                    if (np.isnan(obs_resh[0])== False) and (np.isinf(obs_resh[0])== False):
+#                    print(obs_resh)
+#                    print(forecast_resh)
+                    if (np.isnan(obs_resh).any()== False) and (np.isinf(forecast_resh).any()== False):
                        # print(obs_resh)
-                        RMSE[ii,jj] = mean_squared_error(obs_resh[np.isnan(obs_resh)==False], forecast_resh[np.isnan(obs_resh)==False]) ** 0.5
+                        RMSE[ii,jj] = mean_squared_error(obs_resh, forecast_resh) ** 0.5
                     else:
                         #RMSE[ii,jj] = float('NaN')
-                        RMSE[ii,jj] = float(0.0) # to ignore the edges !! in plotting 
-                        np.savetxt(here+"Trash/RMSE_"+str(counter)+".csv", RMSE, delimiter=",")
+                        RMSE[ii,jj] = float('NaN') # to ignore the edges !! in plotting 
+                    np.savetxt(here+"Trash/RMSE_"+str(counter)+".csv", RMSE, delimiter=",")
+                    #print(RMSE)
             for rr in range(0,timesteps-start_time):
                 np.savetxt(here+"Trash/SPREAD_"+ str(rr)+ "_" + str(counter)+".csv", np.squeeze(forecast[rr,:,:]), delimiter=",")
             counter = counter + 1

@@ -14,11 +14,11 @@ from CCLM_OUTS import Plot_CCLM
 # option == 7 ->  shift 4 with corrected smaller cclm domain and nboundlines = 9
 # option == 8 ->  shift 4 with corrected bigger cclm domain and nboundlines = 3
 from CCLM_OUTS import Plot_CCLM
-def f(x):
-   if x==-9999:
-      return float('NaN')
-   else:
-      return x
+#def f(x):
+#   if x==-9999:
+#      return float('NaN')
+#   else:
+#      return x
 def read_data_from_mistral(dir='/work/bb1029/b324045/work1/work/member/post/',name='member_T_2M_ts_seasmean.nc',var='T_2M'):
     # type: (object, object, object) -> object
     #a function to read the data from mistral work
@@ -37,9 +37,10 @@ def read_data_from_mistral(dir='/work/bb1029/b324045/work1/work/member/post/',na
     t = nc.variables[var][:].squeeze()
     rlats = nc.variables['rlat'][:]  # extract/copy the data
     rlons = nc.variables['rlon'][:]
-    f2 = np.vectorize(f)
-    t= f2(t)
-    t=t.squeeze()+273.15
+    #f2 = np.vectorize(f)
+    #t= f2(t)
+    #t=t.data
+    t=t.squeeze()
     nc.close()
 
     return(t, lats, lons, rlats, rlons)

@@ -26,7 +26,8 @@ Vari   = 'T_2M'
 buffer=20
 timesteps=10   # number of the seasons (years)
 start_time=0
-name_2 = 'member_relax_3_big_00_' + Vari + '_ts_splitseas_1979_2015_' + SEAS + '.nc'
+#name_2 = 'member_relax_3_big_00_' + Vari + '_ts_splitseas_1979_2015_' + SEAS + '.nc'
+name_2 = 'tg_0.44deg_rot_v15.0_' + SEAS + '_1979_2015_remapbil.nc'
 member=0
 DIR="path_oi"
 DIR_exp="path_dir"+"/"
@@ -60,13 +61,36 @@ pdf_name= 'last_m100_l20_'+str(member)+'.pdf'
 #t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='/work/bb1029/b324045/work5/03/member_relax_3_big_00/post/', # the observation (default run without shifting)
 #                                            name=name_2,
 #                                            var=Vari)
-t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='NETCDFS_CCLM/03/member_relax_3_big_00/post/', # the observation (default run without shifting)
-                                            name=name_2,
-                                            var=Vari)
+#t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='NETCDFS_CCLM/03/member_relax_3_big_00/post/', # the observation (default run without shifting)
+#                                            name=name_2,
+#                                            var=Vari)
+t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='/NETCDFS_CCLM/eobs/', # the observation (default run without shifting)
+                                        name=name_2,
+                                        var=Vari)
+
 dext_lon = t_o.shape[2] - (2 * buffer)
 dext_lat = t_o.shape[1] - (2 * buffer)
 start_lon=(buffer+4)
 start_lat=(buffer-4)
+
+##TODO: make it a function:
+#def f(x):
+#    if x==-9999:
+#        return float('NaN')
+#    else:
+#        return x
+#f2 = np.vectorize(f)
+#t_o= f2(t_o)
+#t_o=t_o.squeeze()
+t_o = t_o.data
+#t_o[np.isnan(t_o)] = np.nanmean(t_o)
+##end todo         
+
+t_o[t_o<-900]=float('NaN')
+t_o[np.isnan(t_o)]=float('NaN')
+
+
+
 forecast = result_IO
 obs = t_o[0:month_length, buffer:buffer + dext_lat, buffer:buffer + dext_lon]
 RMSE=np.zeros((forecast.shape[1],forecast.shape[2]))
@@ -76,26 +100,26 @@ for i in range(0,forecast.shape[1]):
     for j in range(0,forecast.shape[2]):
         forecast_resh=np.squeeze(forecast[:,i,j])
         obs_resh=np.squeeze(obs[:,i,j])
-        if (np.isnan(obs_resh[0])== False) and (np.isinf(obs_resh[0])== False):
+        if (np.isnan(obs_resh).any()== False) and (np.isinf(obs_resh).any() == False) and (np.isnan(forecast_resh).any()== False) and (np.isinf(forecast_resh).any()== False):
             RMSE[i,j] = mean_squared_error(obs_resh, forecast_resh) ** 0.5 # Calculating the RMSEs for each grid point
         else:
-            RMSE[i,j] = float(0.0)
+            RMSE[i,j] = float('NaN')
         
 for i in range(0,forecast.shape[0]):
     forecast_resh_ts=np.squeeze(forecast[i,:,:])
     obs_resh_ts=np.squeeze(obs[i,:,:])
-    if (np.isnan(obs_resh_ts[0])== False) and (np.isinf(obs_resh_ts[0])== False):
+    if (np.isnan(obs_resh_ts).any() == False) and (np.isinf(obs_resh_ts).any() == False) and (np.isnan(forecast_resh_ts).any()== False) and (np.isinf(forecast_resh_ts).any() == False):
         RMSE_TIME_SERIES[i] = mean_squared_error(obs_resh_ts, forecast_resh_ts) ** 0.5 #Calculating RMSEs for each month for Analysis
     else:
-        RMSE_TIME_SERIES[i] = float(0.0)
+        RMSE_TIME_SERIES[i] = float('NaN')
 
 for i in range(0,forecast.shape[0]):
     forecast_orig_ts=np.squeeze(t_f[i,:,:])
     obs_resh_ts=np.squeeze(obs[i,:,:])
-    if (np.isnan(obs_resh_ts[0])== False) and (np.isinf(obs_resh_ts[0])== False):
+    if (np.isnan(obs_resh_ts).any() == False) and (np.isinf(obs_resh_ts).any() == False) and (np.isnan(forecast_orig_ts).any()== False) and (np.isinf(forecast_orig_ts).any() == False):
         RMSE_TIME_SERIES_Forecast[i] = mean_squared_error(obs_resh_ts, forecast_orig_ts) ** 0.5 #Calculating RMSEs for each month for forecast
     else:
-        RMSE_TIME_SERIES_Forecast[i] = float(0.0)
+        RMSE_TIME_SERIES_Forecast[i] = float('NaN')
 
 
 fig = plt.figure('1')
@@ -113,10 +137,10 @@ ax = plt.axes(projection=rp)
 ax.coastlines('50m', linewidth=0.8)
 if SEAS[0] == "D":
 #    v = np.linspace(0, .8, 9, endpoint=True)# the limits of the colorbar for winter
-    v = np.linspace(0, 4.8, 9, endpoint=True)
+    v = np.linspace(0, 3.2, 9, endpoint=True)
 else:
 #    v = np.linspace(0, .8, 9, endpoint=True)# the limits of the colorbar for other seasons
-    v = np.linspace(0, 0.8, 9, endpoint=True)
+    v = np.linspace(0, 3.2, 9, endpoint=True)
 
 # Write the RMSE mean of the member in a file
 import csv
@@ -155,7 +179,7 @@ plt.hlines(y=max(rlat_o[buffer:-buffer]), xmin=min(rlon_o[buffer:-buffer]), xmax
 plt.vlines(x=min(rlon_o[buffer:-buffer]), ymin=min(rlat_o[buffer:-buffer]), ymax=max(rlat_o[buffer:-buffer]), color='black', linewidth=4)
 plt.vlines(x=max(rlon_o[buffer:-buffer]), ymin=min(rlat_o[buffer:-buffer]), ymax=max(rlat_o[buffer:-buffer]), color='black', linewidth=4)
 
-Plot_CCLM(dir_mistral='NETCDFS_CCLM/03/member_relax_3_big_00/post/',name=name_2,bcolor='black',var=Vari,flag='FALSE',color_map='TRUE', alph=1, grids='FALSE', grids_color='red', rand_obs='TRUE', NN=NN)
+Plot_CCLM(dir_mistral='/NETCDFS_CCLM/eobs/',name=name_2,bcolor='black',var=Vari,flag='FALSE',color_map='TRUE', alph=1, grids='FALSE', grids_color='red', rand_obs='TRUE', NN=NN)
 
 xs, ys, zs = rp.transform_points(pc,
                                  np.array([-17, 105.0]),# Adjust for other domains!

@@ -23,14 +23,14 @@ Var='T_2M'
 #COR_LEN=1
 M=50 #Number of influential points
 # path to the optiminterp exe files:
-DIR_python='/home/bijan/Documents/DATA_ASSIMILATION/OI_EOBS_TEST/src'
+DIR_python='/scratch/users/fallah/OI_EOBS/OI_CCLM/src/'
 # path to the codes:
-DIR_OI='/home/bijan/Documents/DATA_ASSIMILATION/OI_EOBS_TEST/inst/'
+DIR_OI='/scratch/users/fallah/OI_EOBS/OI_CCLM/inst/'
 no_members=4 #----
 buffer=20
 inflation=1.0
 # path to the work directory:
-DIR_WORK='/home/bijan/SCRATCH/'
+DIR_WORK='/daten/cady/EOBS/'
 #std_err=0.1 # Standard deviation of the observation error (white noise)
 mean_err=0.0 # mean of the observation error (white noise)
 SNR=3 #
@@ -66,7 +66,7 @@ DIR_WORK=${DIR_WORK}/${inflation}/${no_members}_${SEAS}/
 while [ $NN -lt 501 ]; do
 # COR_LEN=1
 # while [ $COR_LEN -lt 20 ]; do
-     member=0    # -------------------------------------------------------
+     member=3    # -------------------------------------------------------
      while [ $member -lt $no_members ]; do
          NAME=${first_name}
          NAME_it=${NAME}_${COR_LEN}_${NN}_
