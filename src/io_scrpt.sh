@@ -17,7 +17,7 @@ set -ex
 month_length=36
 SEAS="JJA"
 #SEAS="DJF"
-NN=500
+NN=100
 Var='T_2M'
 #Var='TOT_PREC'
 #COR_LEN=1
@@ -63,7 +63,7 @@ if [ ! -d "${DIR_WORK}${inflation}/${no_members}_${SEAS}/final_plot" ]; then
 fi
 
 DIR_WORK=${DIR_WORK}/${inflation}/${no_members}_${SEAS}/
-while [ $NN -lt 501 ]; do
+while [ $NN -lt 5001 ]; do
 # COR_LEN=1
 # while [ $COR_LEN -lt 20 ]; do
      member=3    # -------------------------------------------------------

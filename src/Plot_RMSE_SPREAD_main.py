@@ -67,7 +67,7 @@ def plot_rmse_spread(PDF="name.pdf",vari="RMSE",VAL=np.zeros((10,10,10)),x=10,y=
 fig = plt.figure('1')
 fig.set_size_inches(14, 10)
 # ================================= NAMELIST ===================================================
-NN=1000
+NN=1000#number
 SEAS='DJF'
 #SEAS='JJA'
 Vari   = 'T_2M'
