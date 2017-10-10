@@ -34,11 +34,12 @@ def extract_pseudo(NN=2000,dir='/work/bb1029/b324045/work5/03/member_relax_3_big
     
     points[:, 1] = SS[0:NN]
     points[:, 2] = TT[0:NN]
-
+    
+#    t_o_1, lat_o_1, lon_o_1, rlat_o_1, rlon_o_1 = rdfm #added for correcting the edges for 4x36 years run !!!!
     t_o, lat_o, lon_o, rlat_o, rlon_o = rdfm(dir, name, var)
-    t_o = t_o.data
-    t_o[t_o==-9999]=float('nan')
-    t_o[np.isnan(t_o)]=np.nanmean(t_o)
+    #t_o = t_o.data
+    #t_o[t_o==-9999]=float('nan')
+    #t_o[np.isnan(t_o)]=np.nanmean(t_o)
     
 
 

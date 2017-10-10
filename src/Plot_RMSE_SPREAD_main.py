@@ -94,10 +94,12 @@ t_o, lat_o, lon_o, rlat_o, rlon_o =rdfm(dir='NETCDFS_CCLM/eobs/', # the observat
 #      return x
 #f2 = np.vectorize(f)
 #t_o= f2(t_o)
-t_o=t_o.data
-t_o[t_o<-900]=float('NaN')
+#print(t_o)
+#t_o=np.array(t_o.data)
+#print(t_o)
+#t_o[t_o<-900]=float('NaN')
 #t_o[np.isnan(t_o)]=np.nanmean(np.nanmean(t_o,axis=(0,1)))
-t_o[np.isnan(t_o)]=float('NaN')
+#t_o[np.isnan(t_o)]=float('NaN')
 #print('88888888888888888888888888888888888888888888888888888888888')
 #print(np.nanmean(np.nanmean(t_o,axis=(0,1))))
 #print('88888888888888888888888888888888888888888888888888888888888')

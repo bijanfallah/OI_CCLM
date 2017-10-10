@@ -10,7 +10,7 @@ from RMSE_MAPS_INGO import read_data_from_mistral as rdfm
 
 # ------------------------ Namelist -------------------------------------------
 
-NN=500
+NN=2700
 SEAS='DJF'
 #SEAS='JJA'
 Vari   = 'T_2M'
@@ -41,7 +41,8 @@ name_2 = 'member_relax_3_big_04_' + Vari + '_ts_splitseas_1979_2015_' + SEAS + '
 t_3, lat_3, lon_3, rlat_3, rlon_3 =rdfm(dir='NETCDFS_CCLM/03/member_relax_3_big_04/post/',
                                             name=name_2,
                                             var=Vari)
-print r_lat3
+
+print rlat_3
 print '999999999999999999999999999999999999999999999999999999999999999999999999             test2 9999999999999999999999999999999999999999999999999999999'
 
 name_2 = 'member_relax_4_big_04_' + Vari + '_ts_splitseas_1979_2015_' + SEAS + '.nc'
@@ -66,8 +67,9 @@ time_series_Nature = np.zeros(month_length)
 #            counter = counter + 1
 #dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_long_runs_4_members/OI_CCLM/src/test/1.0/4_JJA/long_runs_.3_0.0_1.7_500_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
 
-#dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_walter_comment/1.0/4_DJF/walter_comment_3.0_0.0_2.1_500_3_1.0_4/Trash/RMSE_ANALYSIS_DJF_50_2.1_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
-dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_walter_comment/1.0/4_JJA/walter_comment_3.0_0.0_1.7_500_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
+dum = genfromtxt('/var/autofs/daten/cady/EOBS/1.0/4_DJF/EOBS_10_0.0_2.1_2700_3_1.0_4/Trash/RMSE_ANALYSIS_DJF_50_2.1_2700_T_2M_3.pdf3_Analysis.csv', delimiter=",")
+#dum = genfromtxt('/var/autofs/daten/cady/EOBS/1.0/4_JJA/EOBS_10_0.0_1.7_2700_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_2700_T_2M_3.pdf3_Analysis.csv', delimiter=",") 
+#dum = genfromtxt('/var/autofs/daten/cady/DATA_ASSIMILATION_walter_comment/1.0/4_JJA/walter_comment_3.0_0.0_1.7_500_3_1.0_4/Trash/RMSE_ANALYSIS_JJA_50_1.7_500_T_2M_3.pdf3_Analysis.csv', delimiter=",")
 dext_lon = np.array(t_o.shape[2] - (2 * buffer))
 dext_lat = np.array(t_o.shape[1] - (2 * buffer))
 #print buffer, t_o.shape, t_1.shape
@@ -163,7 +165,7 @@ plt.xlabel("$Time$", fontsize=30,fontname="Times New Roman")
 plt.ylabel("$RMSE$", fontsize=30,fontname="Times New Roman")
 plt.tick_params(axis='both', which='major', labelsize=10)
 xlim([0,month_length+1])
-ylim([.1,.6])
+ylim([.6,1.6])
 plt.savefig(here+''+"RMSE_Time_series_"+Vari+'_'+SEAS+".pdf", bbox_inches="tight");
 plt.close()
 

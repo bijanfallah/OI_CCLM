@@ -31,6 +31,10 @@ def read_data_from_mistral(dir='/work/bb1029/b324045/work1/work/member/post/',na
     CMD = 'wget users.met.fu-berlin.de/~BijanFallah/' + dir + name
     os.system(CMD)
     nc = NetCDFFile(name)
+#    for name2, variable in nc.variables.items():
+#        for attrname in variable.ncattrs():
+#                    print(name2, variable, '-----------------',attrname)
+#                    #print("{} -- {}".format(attrname, getattr(variable, attrname)))
     os.remove(name)
     lats = nc.variables['lat'][:]
     lons = nc.variables['lon'][:]
@@ -41,6 +45,7 @@ def read_data_from_mistral(dir='/work/bb1029/b324045/work1/work/member/post/',na
     #t= f2(t)
     #t=t.data
     t=t.squeeze()
+    #print()
     nc.close()
 
     return(t, lats, lons, rlats, rlons)

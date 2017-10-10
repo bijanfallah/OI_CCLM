@@ -82,12 +82,12 @@ start_lat=(buffer-4)
 #f2 = np.vectorize(f)
 #t_o= f2(t_o)
 #t_o=t_o.squeeze()
-t_o = t_o.data
+#t_o = t_o.data
 #t_o[np.isnan(t_o)] = np.nanmean(t_o)
 ##end todo         
 
-t_o[t_o<-900]=float('NaN')
-t_o[np.isnan(t_o)]=float('NaN')
+#t_o[t_o<-900]=float('NaN')
+#t_o[np.isnan(t_o)]=float(0.0)
 
 
 
@@ -104,24 +104,26 @@ for i in range(0,forecast.shape[1]):
             RMSE[i,j] = mean_squared_error(obs_resh, forecast_resh) ** 0.5 # Calculating the RMSEs for each grid point
         else:
             RMSE[i,j] = float('NaN')
-        
+#TODO: ---------------------------------------        modify here!!!!!!! 
 for i in range(0,forecast.shape[0]):
     forecast_resh_ts=np.squeeze(forecast[i,:,:])
     obs_resh_ts=np.squeeze(obs[i,:,:])
+    forecast_resh_ts[obs_resh_ts==float(0.0)]=float(0.0)
     if (np.isnan(obs_resh_ts).any() == False) and (np.isinf(obs_resh_ts).any() == False) and (np.isnan(forecast_resh_ts).any()== False) and (np.isinf(forecast_resh_ts).any() == False):
         RMSE_TIME_SERIES[i] = mean_squared_error(obs_resh_ts, forecast_resh_ts) ** 0.5 #Calculating RMSEs for each month for Analysis
     else:
         RMSE_TIME_SERIES[i] = float('NaN')
-
+        
 for i in range(0,forecast.shape[0]):
     forecast_orig_ts=np.squeeze(t_f[i,:,:])
     obs_resh_ts=np.squeeze(obs[i,:,:])
+    forecast_orig_ts[obs_resh_ts==float(0.0)]=float(0.0)
     if (np.isnan(obs_resh_ts).any() == False) and (np.isinf(obs_resh_ts).any() == False) and (np.isnan(forecast_orig_ts).any()== False) and (np.isinf(forecast_orig_ts).any() == False):
         RMSE_TIME_SERIES_Forecast[i] = mean_squared_error(obs_resh_ts, forecast_orig_ts) ** 0.5 #Calculating RMSEs for each month for forecast
     else:
         RMSE_TIME_SERIES_Forecast[i] = float('NaN')
 
-
+# END TODO
 fig = plt.figure('1')
 fig.set_size_inches(14, 10)
 

@@ -33,7 +33,7 @@ inflation=1.0
 DIR_WORK='/daten/cady/EOBS/'
 #std_err=0.1 # Standard deviation of the observation error (white noise)
 mean_err=0.0 # mean of the observation error (white noise)
-SNR=3 #
+SNR=10 #
 
 std_err=$(python -c "print((1.113/${SNR})**0.5)")
 echo $std_err
@@ -44,10 +44,12 @@ if [ ! -d "${DIR_WORK}" ]; then
   mkdir ${DIR_WORK}
 fi
 if [ $SEAS = "DJF" ];then 
-   COR_LEN=2.1
+    COR_LEN=2.1
+#    COR_LEN=10
 fi
 if [ $SEAS = "JJA" ]; then
-   COR_LEN=1.7 
+    COR_LEN=1.7
+   # COR_LEN=10
 fi
          
 
@@ -63,7 +65,7 @@ if [ ! -d "${DIR_WORK}${inflation}/${no_members}_${SEAS}/final_plot" ]; then
 fi
 
 DIR_WORK=${DIR_WORK}/${inflation}/${no_members}_${SEAS}/
-while [ $NN -lt 5001 ]; do
+while [ $NN -lt 2701 ]; do
 # COR_LEN=1
 # while [ $COR_LEN -lt 20 ]; do
      member=3    # -------------------------------------------------------
